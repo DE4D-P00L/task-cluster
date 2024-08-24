@@ -1,8 +1,10 @@
 import cluster from "cluster";
 import "dotenv/config";
 import { startServer } from "./server.js";
+import os from 'os';
+const cpuCount = os.cpus().length;
 
-const ClusterCount = 2;
+const ClusterCount = cpuCount < 2 ? 1 : 2;
 
 if (cluster.isPrimary) {
   for (let i = 0; i < ClusterCount; i++) {
